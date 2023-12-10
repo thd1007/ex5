@@ -22,4 +22,13 @@ jobs:
       - name: Install Prosellint
         run: pip install proselint
       - name: Run Prosellint
-        run: proselint *.md
+        run: |
+          md_files=$(find . -type f -name "*.md")
+          if [[ -n "$md_files" ]]; then
+            for file in $md_files; do
+              proselint "$file"
+            done
+          else
+            :
+          fi
+        shell: bash
